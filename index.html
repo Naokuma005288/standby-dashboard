@@ -1,1 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Standby Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="standby-root">
+    <!-- 左：時計ゾーン -->
+    <section class="clock-panel">
+      <div id="time" class="clock-time">00:00</div>
+      <div id="date" class="clock-date">2000年1月1日(土)</div>
+    </section>
 
+    <!-- 右：ウィジェットゾーン -->
+    <section class="widgets-panel">
+      <header class="widgets-header">
+        <h1 class="widgets-title">Widgets</h1>
+        <button id="addWidgetBtn" class="icon-button" aria-label="ウィジェットを追加">
+          ＋
+        </button>
+      </header>
+
+      <div id="widgetsContainer" class="widgets-container">
+        <!-- JSでどんどんウィジェット追加される -->
+      </div>
+    </section>
+  </div>
+
+  <!-- ES Modules で分割したJSを読み込む -->
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
