@@ -1,8 +1,10 @@
 // src/main.js
-import { setupClock } from "./core/clock.js";
-import { setupWidgetPanel } from "./core/widgetManager.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-  setupClock();
-  setupWidgetPanel();
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.setupClock) {
+    window.setupClock();
+  }
+  if (window.setupWidgetPanel) {
+    window.setupWidgetPanel();
+  }
 });
