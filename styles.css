@@ -1,1 +1,187 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: radial-gradient(circle at top, #222 0, #05060a 55%, #000 100%);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Helvetica Neue", sans-serif;
+  color: #f5f5f5;
+}
+
+body {
+  overflow: hidden;
+}
+
+/* 横画面レイアウト */
+.standby-root {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+  padding: 32px;
+  gap: 24px;
+}
+
+/* 左：時計パネル */
+.clock-panel {
+  flex: 1;
+  border-radius: 32px;
+  background: linear-gradient(145deg, #101119, #05060b);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.8),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+}
+
+.clock-time {
+  font-size: clamp(90px, 16vw, 150px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 0.9;
+}
+
+.clock-date {
+  margin-top: 16px;
+  font-size: 20px;
+  opacity: 0.8;
+}
+
+/* 右：ウィジェットパネル */
+.widgets-panel {
+  flex: 1.2;
+  border-radius: 32px;
+  background: linear-gradient(160deg, #0c1016, #050509);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.8),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  min-width: 0;
+}
+
+.widgets-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.widgets-title {
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.icon-button {
+  border: none;
+  outline: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 22px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.icon-button:active {
+  transform: translateY(0);
+}
+
+/* ウィジェット一覧（スクロール） */
+.widgets-container {
+  margin-top: 8px;
+  padding-right: 4px;
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+/* ウィジェットカード */
+.widget-card {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  backdrop-filter: blur(12px);
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.widget-title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.widget-remove {
+  border: none;
+  background: transparent;
+  color: #aaa;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
+.widget-remove:hover {
+  color: #f88;
+}
+
+.widget-body {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.widget-body textarea {
+  width: 100%;
+  min-height: 60px;
+  border-radius: 12px;
+  border: none;
+  padding: 8px;
+  resize: vertical;
+  background: rgba(0, 0, 0, 0.35);
+  color: #f5f5f5;
+  font: inherit;
+}
+
+/* 縦長になったときの保険 */
+@media (max-aspect-ratio: 4/3) {
+  .standby-root {
+    flex-direction: column;
+  }
+
+  .clock-panel,
+  .widgets-panel {
+    border-radius: 24px;
+    padding: 24px;
+  }
+
+  .clock-time {
+    font-size: clamp(72px, 14vw, 110px);
+  }
+}
