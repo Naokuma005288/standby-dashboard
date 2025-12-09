@@ -1,6 +1,8 @@
 // src/plugins/helloWidget.js
 
-export const helloWidgetPlugin = {
+window.WidgetPlugins = window.WidgetPlugins || [];
+
+window.WidgetPlugins.push({
   id: "hello",
   name: "今日のひとこと",
 
@@ -21,4 +23,4 @@ export const helloWidgetPlugin = {
     wrapper.appendChild(p);
     return wrapper;
   },
-};
+});
