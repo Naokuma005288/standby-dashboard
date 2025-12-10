@@ -10,28 +10,151 @@
   <div class="standby-root">
     <!-- 左：時計 -->
     <section class="clock-panel">
-      <div id="time" class="clock-time">00:00</div>
-      <div id="date" class="clock-date">2000年1月1日(土)</div>
+      <div class="clock-main">
+        <div class="clock-time">
+          <span id="time-hours">00</span>
+          <span class="clock-colon">:</span>
+          <span id="time-minutes">00</span>
+        </div>
+        <div class="clock-sub">
+          <span id="time-seconds">00</span>
+          <span id="clock-weekday">Wed</span>
+        </div>
+        <div id="date" class="clock-date">2000-01-01</div>
+
+        <!-- 時間帯ごとの挨拶 -->
+        <div id="clock-greeting" class="clock-greeting"></div>
+
+        <div class="clock-extra">
+          <div class="clock-day">
+            <div class="clock-day-header">
+              <span id="time-of-day-label">Daytime</span>
+              <span id="day-progress-label">0% passed</span>
+            </div>
+            <div class="clock-day-bar">
+              <div id="day-progress-bar-fill" class="clock-day-bar-fill"></div>
+            </div>
+          </div>
+
+          <div class="clock-world">
+            <div class="clock-world-item">
+              <span class="clock-world-label">Tokyo</span>
+              <span id="world-tokyo-time" class="clock-world-time">00:00</span>
+            </div>
+            <div class="clock-world-item">
+              <span class="clock-world-label">London</span>
+              <span id="world-london-time" class="clock-world-time">00:00</span>
+            </div>
+            <div class="clock-world-item">
+              <span class="clock-world-label">New York</span>
+              <span id="world-ny-time" class="clock-world-time">00:00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 🔊 時計の下：超小型プレイヤー -->
+        <div class="clock-player-wrapper">
+          <div class="mini-player" id="miniPlayer">
+            <div class="mini-player-left">
+              <div class="mini-player-thumb" id="playerThumbWrapper">
+                <video id="playerMedia" class="mini-player-video" playsinline></video>
+              </div>
+              <div class="mini-player-filename" id="playerFilename">
+                No file · Tap ＋
+              </div>
+            </div>
+            <div class="mini-player-center">
+              <button class="mini-player-btn" id="playerPrevBtn" aria-label="Previous">⏮</button>
+              <button class="mini-player-btn main" id="playerPlayPauseBtn" aria-label="Play/Pause">▶</button>
+              <button class="mini-player-btn" id="playerNextBtn" aria-label="Next">⏭</button>
+            </div>
+            <div class="mini-player-right">
+              <button class="mini-player-add-btn" id="playerAddBtn" aria-label="Add files">＋</button>
+              <input
+                type="file"
+                id="playerFileInput"
+                accept="audio/*,video/*"
+                multiple
+                hidden
+              />
+            </div>
+          </div>
+          <div class="mini-player-seek-row">
+            <input
+              type="range"
+              id="playerSeek"
+              class="mini-player-seek"
+              min="0"
+              max="1000"
+              value="0"
+            />
+            <div class="mini-player-time">
+              <span id="playerCurrentTime">0:00</span>
+              <span>/</span>
+              <span id="playerDuration">0:00</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- 右：ウィジェット -->
     <section class="widgets-panel">
       <header class="widgets-header">
-        <h1 class="widgets-title">Widgets</h1>
-        <button id="addWidgetBtn" class="icon-button" aria-label="ウィジェットを追加">
-          ＋
-        </button>
+        <h1 id="currentWidgetTitle" class="widgets-title">Widget</h1>
+        <div class="lang-toggle">
+          <button id="langJaBtn" class="lang-btn">JA</button>
+          <span class="lang-separator">/</span>
+          <button id="langEnBtn" class="lang-btn">EN</button>
+        </div>
       </header>
 
+      <div id="widgetsIndicators" class="widgets-indicators"></div>
       <div id="widgetsContainer" class="widgets-container"></div>
     </section>
   </div>
 
-  <!-- ここ重要：moduleじゃなくて普通のscriptとして順番に読み込む -->
-  <script src="./src/plugins/memoWidget.js"></script>
+  <!-- 言語初期化 -->
+  <script>
+    (function () {
+      var lang = "ja";
+      try {
+        var stored = localStorage.getItem("standby_lang");
+        if (stored === "ja" || stored === "en") {
+          lang = stored;
+        } else {
+          var nav = (navigator.language || "ja").toLowerCase();
+          lang = nav.indexOf("en") === 0 ? "en" : "ja";
+          localStorage.setItem("standby_lang", lang);
+        }
+      } catch (e) {
+        lang = "ja";
+      }
+      window.STANDBY_LANG = lang;
+      document.documentElement.setAttribute("data-lang", lang);
+    })();
+  </script>
+
+  <!-- EEWサービス -->
+  <script src="./src/eewService.js"></script>
+
+  <!-- ウィジェットプラグイン -->
   <script src="./src/plugins/helloWidget.js"></script>
+  <script src="./src/plugins/weatherWidget.js"></script>
+  <script src="./src/plugins/newsWidget.js"></script>
+  <script src="./src/plugins/memoWidget.js"></script>
+  <script src="./src/plugins/todoWidget.js"></script>
+  <script src="./src/plugins/countdownWidget.js"></script>
+  <script src="./src/plugins/calendarWidget.js"></script>
+  <script src="./src/plugins/overviewWidget.js"></script>
+  <script src="./src/plugins/moodWidget.js"></script>
+  <script src="./src/plugins/focusTimerWidget.js"></script>
+  <script src="./src/plugins/eewWidget.js"></script>
+
+  <!-- コアJS -->
   <script src="./src/widgetManager.js"></script>
   <script src="./src/clock.js"></script>
+  <script src="./src/player.js"></script>
   <script src="./src/main.js"></script>
 </body>
 </html>
